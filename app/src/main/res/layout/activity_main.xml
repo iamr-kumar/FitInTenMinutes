@@ -6,13 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_screen_image_height"
+        android:src="@drawable/img_main_page"
+        android:contentDescription="@string/image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/main_screen_main_layout_padding"
+        />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/tvStart"
+        android:layout_width="@dimen/start_button_size"
+        android:layout_height="@dimen/start_button_size"
+        android:gravity="center"
+        android:text="@string/str_start"
+        android:textColor="@color/main_color"
+        android:textSize="@dimen/start_button_label_textsize"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
+        app:layout_constraintVertical_bias="0.16"
+        android:background="@drawable/item_color_accent_border_ripple_background"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
