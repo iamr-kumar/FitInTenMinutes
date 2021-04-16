@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/accent_color"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         />
 
     <LinearLayout
@@ -24,12 +21,14 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarExcerciseActivity">
+        android:layout_below="@+id/toolbarExcerciseActivity"
+        android:padding="16dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GET READY FOR"
+            android:text="GET READY"
             android:textColor="@color/accent_color"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -76,7 +75,27 @@
 
         </FrameLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UPCOMING EXCERCISE"
+            android:textColor="@color/main_color"
+             android:layout_marginTop="16dp"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvNextExcercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Jumping Jacks"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="18sp"
+            />
+
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/llExcericeView"
         android:layout_width="match_parent"
@@ -85,9 +104,22 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarExcerciseActivity">
+        android:layout_below="@+id/toolbarExcerciseActivity"
+        android:padding="16dp">
+
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_jumping_jacks"
+            />
 
         <TextView
+            android:id="@+id/tvExcerciseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="EXCERCISE TIMER"
@@ -124,7 +156,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/tvTimerExcercie"
+                    android:id="@+id/tvExcerciseTimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
@@ -139,4 +171,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
