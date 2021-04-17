@@ -1,15 +1,18 @@
 package com.example.fitinsevenminutes
 
+import android.app.Dialog
 import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitinsevenminutes.databinding.ActivityExcerciseBinding
+import com.example.fitinsevenminutes.databinding.CustomDialogBinding
 import org.w3c.dom.Text
 import java.lang.Exception
 import java.util.*
@@ -43,7 +46,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
         binding.toolbarExcerciseActivity.setNavigationOnClickListener {
-            onBackPressed()
+            customDialogForBackButton()
         }
 
         tts = TextToSpeech(this, this)
@@ -131,11 +134,11 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setExcerciseProgressBar() {
         binding.progressBarExcerice.progress = excerciseProgress
-        excerciseTimer = object: CountDownTimer(1000, 1000) {
+        excerciseTimer = object: CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 excerciseProgress++
-                binding.progressBarExcerice.progress = 1 - excerciseProgress
-                binding.tvExcerciseTimer.text = (1 - excerciseProgress).toString()
+                binding.progressBarExcerice.progress = 30 - excerciseProgress
+                binding.tvExcerciseTimer.text = (30 - excerciseProgress).toString()
             }
 
             override fun onFinish() {
@@ -179,6 +182,20 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         adapter = ExcerciseStatusAdapter(excerciseList!!, this)
         binding.rvExcerciseStatus.adapter = adapter
         binding.rvExcerciseStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun customDialogForBackButton() {
+        val dialog = Dialog(this)
+        val dialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
+        dialog.setContentView(dialogBinding.root)
+        dialogBinding.btnConfirm.setOnClickListener {
+            finish()
+            dialog.dismiss()
+        }
+        dialogBinding.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
 }
