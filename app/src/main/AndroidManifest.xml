@@ -11,7 +11,7 @@
         android:theme="@style/Theme.FitInSevenMinutes">
         <activity android:name=".BmiActitvity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
         <activity
             android:name=".FinishActivity"
             android:screenOrientation="portrait"
