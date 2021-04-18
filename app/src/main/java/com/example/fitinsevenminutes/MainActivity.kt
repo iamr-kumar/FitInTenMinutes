@@ -19,5 +19,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ExcerciseActivity::class.java)
             startActivity(intent);
         }
+
+        binding.tvBmi.setOnClickListener {
+            val intent = Intent(this, BmiActitvity::class.java)
+            startActivity(intent)
+        }
     }
 }

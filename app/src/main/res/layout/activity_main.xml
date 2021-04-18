@@ -10,18 +10,18 @@
         android:id="@+id/ivLogo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_screen_image_height"
-        android:src="@drawable/img_main_page"
         android:contentDescription="@string/image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:padding="@dimen/main_screen_main_layout_padding"
-        />
+        android:src="@drawable/img_main_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvStart"
         android:layout_width="@dimen/start_button_size"
         android:layout_height="@dimen/start_button_size"
+        android:background="@drawable/item_color_accent_border_ripple_background"
         android:gravity="center"
         android:text="@string/str_start"
         android:textColor="@color/main_color"
@@ -31,7 +31,34 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivLogo"
-        app:layout_constraintVertical_bias="0.16"
-        android:background="@drawable/item_color_accent_border_ripple_background"/>
+        app:layout_constraintVertical_bias="0.16" />
+
+    <TextView
+        android:id="@+id/tvBmi"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/item_circular_color_accent_background"
+        android:gravity="center"
+        android:text="BMI"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStart" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CALCULATOR"
+        android:textColor="@color/main_color"
+        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBmi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
