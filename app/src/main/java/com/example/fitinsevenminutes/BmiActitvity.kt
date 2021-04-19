@@ -2,6 +2,7 @@ package com.example.fitinsevenminutes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.fitinsevenminutes.databinding.ActivityBmiActitvityBinding
@@ -10,6 +11,12 @@ import java.math.RoundingMode
 
 class BmiActitvity : AppCompatActivity() {
     private lateinit var binding: ActivityBmiActitvityBinding
+
+    val METRIC_UNITS_VIEW = "METRIC_UNIT_VIEW"
+    val US_UNITS_VIEW = "US_UNIT_VIEW"
+
+    var currentVisibleView: String = METRIC_UNITS_VIEW
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityBmiActitvityBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -17,7 +24,7 @@ class BmiActitvity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbarBmiActivity)
         val actionBar = supportActionBar
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.title = "CALCULATE BMI"
 
@@ -27,29 +34,100 @@ class BmiActitvity : AppCompatActivity() {
         }
 
         binding.btnCalculateUnits.setOnClickListener {
-            if(!validateMetricUnits()) {
-                Toast.makeText(this, "Please enter valid information", Toast.LENGTH_SHORT).show()
+            if(currentVisibleView == METRIC_UNITS_VIEW) {
+                if (!validateMetricUnits()) {
+                    Toast.makeText(this, "Please enter valid information", Toast.LENGTH_SHORT).show()
+                } else {
+                    val heightValue: Float = binding.etMetricUnitHeight.text.toString().toFloat() / 100
+                    val weightValue: Float = binding.etMetricUnitWeight.text.toString().toFloat()
+                    val bmi: Float = weightValue / (heightValue * heightValue)
+
+                    displayBMIResult(bmi)
+                }
             }
             else {
-                val heightValue: Float = binding.etMetricUnitHeight.text.toString().toFloat() / 100
-                val weightValue: Float = binding.etMetricUnitWeight.text.toString().toFloat()
-                val bmi: Float = weightValue / (heightValue * heightValue)
+                if (!validateUsUnits()) {
+                    Toast.makeText(this, "Please enter valid information", Toast.LENGTH_SHORT).show()
+                } else {
+                    val inchValue: String = binding.etUsUnitHeightInch.text.toString()
+                    val feetValue: String = binding.etUsUnitHeightFeet.text.toString()
+                    val weightValue: Float = binding.etUsUnitWeight.text.toString().toFloat()
+                    val heightValue = inchValue.toFloat() + feetValue.toFloat() * 12
+                    val bmi: Float = 703 * (weightValue / (heightValue * heightValue))
 
-                displayBMIResult(bmi)
+                    displayBMIResult(bmi)
+                }
+            }
+
+        }
+
+        makeVisibleMetricUnitsView()
+
+        binding.rgUnits.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.rbMetricUnits) {
+                makeVisibleMetricUnitsView()
+            }
+            else {
+                makeVisibleUscUnitsView()
             }
         }
 
     }
 
+    private fun makeVisibleMetricUnitsView() {
+        currentVisibleView = METRIC_UNITS_VIEW
+        binding.tilMetricUnitWeight.visibility = View.VISIBLE
+        binding.tilMetricUnitHeight.visibility = View.VISIBLE
+
+        binding.tilUsUnitWeight.visibility = View.GONE
+        binding.llUsUnitsHeight.visibility = View.GONE
+
+        binding.etMetricUnitHeight.text!!.clear()
+        binding.etMetricUnitWeight.text!!.clear()
+
+        binding.llBmiResult.visibility = View.GONE
+    }
+
+
+    private fun makeVisibleUscUnitsView() {
+        currentVisibleView = US_UNITS_VIEW
+        binding.tilMetricUnitWeight.visibility = View.GONE
+        binding.tilMetricUnitHeight.visibility = View.GONE
+
+        binding.etUsUnitWeight.text!!.clear()
+        binding.etUsUnitHeightInch.text!!.clear()
+        binding.etUsUnitHeightFeet.text!!.clear()
+
+        binding.tilUsUnitWeight.visibility = View.VISIBLE
+        binding.llUsUnitsHeight.visibility = View.VISIBLE
+
+        binding.llBmiResult.visibility = View.GONE
+    }
+
+
     private fun validateMetricUnits(): Boolean {
         var isValid = true
 
-        if(binding.etMetricUnitHeight.text.toString().isEmpty()) {
+        if (binding.etMetricUnitHeight.text.toString().isEmpty()) {
+            isValid = false
+        } else if (binding.etMetricUnitWeight.text.toString().isEmpty()) {
             isValid = false
         }
-        else if(binding.etMetricUnitWeight.text.toString().isEmpty()) {
+        return isValid
+    }
+
+    private fun validateUsUnits():Boolean {
+        var isValid =  true
+        if(binding.etUsUnitWeight.text.toString().isEmpty()) {
             isValid = false
         }
+        else if(binding.etUsUnitHeightFeet.text.toString().isEmpty()) {
+            isValid = false
+        }
+        else if(binding.etUsUnitHeightInch.text.toString().isEmpty()) {
+            isValid = false
+        }
+
         return isValid
     }
 
@@ -88,10 +166,12 @@ class BmiActitvity : AppCompatActivity() {
             bmiDescription = "OMG! You are in a very dangerous condition! Act now!"
         }
 
-        binding.tvBmi.visibility = View.VISIBLE
-        binding.tvBmiValue.visibility = View.VISIBLE
-        binding.tvBmiType.visibility = View.VISIBLE
-        binding.tvBmiDesc.visibility = View.VISIBLE
+        binding.llBmiResult.visibility = View.VISIBLE
+
+//        binding.tvBmi.visibility = View.VISIBLE
+//        binding.tvBmiValue.visibility = View.VISIBLE
+//        binding.tvBmiType.visibility = View.VISIBLE
+//        binding.tvBmiDesc.visibility = View.VISIBLE
 
         val bmiValue = BigDecimal(bmi.toDouble()).setScale(2, RoundingMode.HALF_EVEN).toString()
         binding.tvBmiValue.text = bmiValue
@@ -99,4 +179,7 @@ class BmiActitvity : AppCompatActivity() {
         binding.tvBmiDesc.text = bmiDescription
 
     }
+
+
+
 }

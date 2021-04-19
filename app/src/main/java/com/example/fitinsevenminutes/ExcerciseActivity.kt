@@ -42,7 +42,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         setSupportActionBar(binding.toolbarExcerciseActivity)
         val actionBar = supportActionBar
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
         binding.toolbarExcerciseActivity.setNavigationOnClickListener {
@@ -59,19 +59,19 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     override fun onDestroy() {
-        if(restTimer != null) {
+        if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
         }
-        if(excerciseTimer != null) {
+        if (excerciseTimer != null) {
             excerciseTimer!!.cancel()
             excerciseProgress = 0
         }
-        if(tts != null) {
+        if (tts != null) {
             tts!!.stop()
             tts!!.shutdown()
         }
-        if(player != null) {
+        if (player != null) {
             player!!.stop()
         }
         super.onDestroy()
@@ -79,14 +79,13 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     override fun onInit(status: Int) {
-        if(status == TextToSpeech.SUCCESS) {
+        if (status == TextToSpeech.SUCCESS) {
             var result = tts!!.setLanguage(Locale.US)
 
-            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Toast.makeText(this, "Language Error!", Toast.LENGTH_SHORT).show()
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, "Text to Speech Error", Toast.LENGTH_SHORT).show()
         }
     }
@@ -94,7 +93,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setRestProgressBar() {
         binding.progressBar.progress = restProgress
         binding.tvNextExcercise.text = excerciseList!![currentExcercisePosition + 1].getName()
-        restTimer = object: CountDownTimer(10000, 1000) {
+        restTimer = object : CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 restProgress++
                 binding.progressBar.progress = 10 - restProgress
@@ -116,14 +115,13 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             player = MediaPlayer.create(this, R.raw.press_start)
             player!!.isLooping = false
             player!!.start()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
         binding.llRestView.visibility = View.VISIBLE
         binding.llExcericeView.visibility = View.GONE
 
-        if(restTimer != null) {
+        if (restTimer != null) {
             restTimer!!.cancel()
             restProgress = 0
         }
@@ -134,7 +132,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setExcerciseProgressBar() {
         binding.progressBarExcerice.progress = excerciseProgress
-        excerciseTimer = object: CountDownTimer(30000, 1000) {
+        excerciseTimer = object : CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 excerciseProgress++
                 binding.progressBarExcerice.progress = 30 - excerciseProgress
@@ -142,13 +140,12 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             override fun onFinish() {
-                if(currentExcercisePosition < excerciseList?.size!! - 1) {
+                if (currentExcercisePosition < excerciseList?.size!! - 1) {
                     excerciseList!![currentExcercisePosition].setIsSelected(false)
                     excerciseList!![currentExcercisePosition].setIsCompleted(true)
                     adapter!!.notifyDataSetChanged()
                     setupRestView()
-                }
-                else {
+                } else {
                     finish()
                     val intent = Intent(this@ExcerciseActivity, FinishActivity::class.java)
                     startActivity(intent)
@@ -161,7 +158,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setupExcerciseView() {
         binding.llRestView.visibility = View.GONE
         binding.llExcericeView.visibility = View.VISIBLE
-        if(excerciseTimer != null) {
+        if (excerciseTimer != null) {
             excerciseTimer!!.cancel()
             excerciseProgress = 0
         }
@@ -181,7 +178,8 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setupExcerciseStatusRecyclerView() {
         adapter = ExcerciseStatusAdapter(excerciseList!!, this)
         binding.rvExcerciseStatus.adapter = adapter
-        binding.rvExcerciseStatus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvExcerciseStatus.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun customDialogForBackButton() {
