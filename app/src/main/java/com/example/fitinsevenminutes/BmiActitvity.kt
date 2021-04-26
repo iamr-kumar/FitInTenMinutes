@@ -34,20 +34,22 @@ class BmiActitvity : AppCompatActivity() {
         }
 
         binding.btnCalculateUnits.setOnClickListener {
-            if(currentVisibleView == METRIC_UNITS_VIEW) {
+            if (currentVisibleView == METRIC_UNITS_VIEW) {
                 if (!validateMetricUnits()) {
-                    Toast.makeText(this, "Please enter valid information", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please enter valid information", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
-                    val heightValue: Float = binding.etMetricUnitHeight.text.toString().toFloat() / 100
+                    val heightValue: Float =
+                        binding.etMetricUnitHeight.text.toString().toFloat() / 100
                     val weightValue: Float = binding.etMetricUnitWeight.text.toString().toFloat()
                     val bmi: Float = weightValue / (heightValue * heightValue)
 
                     displayBMIResult(bmi)
                 }
-            }
-            else {
+            } else {
                 if (!validateUsUnits()) {
-                    Toast.makeText(this, "Please enter valid information", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please enter valid information", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     val inchValue: String = binding.etUsUnitHeightInch.text.toString()
                     val feetValue: String = binding.etUsUnitHeightFeet.text.toString()
@@ -66,8 +68,7 @@ class BmiActitvity : AppCompatActivity() {
         binding.rgUnits.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.rbMetricUnits) {
                 makeVisibleMetricUnitsView()
-            }
-            else {
+            } else {
                 makeVisibleUscUnitsView()
             }
         }
@@ -116,15 +117,13 @@ class BmiActitvity : AppCompatActivity() {
         return isValid
     }
 
-    private fun validateUsUnits():Boolean {
-        var isValid =  true
-        if(binding.etUsUnitWeight.text.toString().isEmpty()) {
+    private fun validateUsUnits(): Boolean {
+        var isValid = true
+        if (binding.etUsUnitWeight.text.toString().isEmpty()) {
             isValid = false
-        }
-        else if(binding.etUsUnitHeightFeet.text.toString().isEmpty()) {
+        } else if (binding.etUsUnitHeightFeet.text.toString().isEmpty()) {
             isValid = false
-        }
-        else if(binding.etUsUnitHeightInch.text.toString().isEmpty()) {
+        } else if (binding.etUsUnitHeightInch.text.toString().isEmpty()) {
             isValid = false
         }
 
@@ -179,7 +178,6 @@ class BmiActitvity : AppCompatActivity() {
         binding.tvBmiDesc.text = bmiDescription
 
     }
-
 
 
 }

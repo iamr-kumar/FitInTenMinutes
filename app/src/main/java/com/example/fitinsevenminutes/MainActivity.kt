@@ -24,5 +24,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, BmiActitvity::class.java)
             startActivity(intent)
         }
+
+       binding.tvHistory.setOnClickListener {
+           val intent = Intent(this, HistoryActivity::class.java)
+           startActivity(intent)
+       }
+
+
     }
 }
