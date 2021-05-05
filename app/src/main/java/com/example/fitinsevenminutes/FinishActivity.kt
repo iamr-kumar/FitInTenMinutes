@@ -2,7 +2,10 @@ package com.example.fitinsevenminutes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.fitinsevenminutes.databinding.ActivityFinishBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FinishActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFinishBinding
@@ -24,5 +27,20 @@ class FinishActivity : AppCompatActivity() {
         binding.btnFinish.setOnClickListener {
             finish()
         }
+
+        addDateToDatabase()
+    }
+
+    private fun addDateToDatabase() {
+        val calender: Calendar = Calendar.getInstance()
+        val dateTime = calender.time
+
+        Log.i("date", "" + dateTime)
+        val sdf = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault())   //get simple data format
+        val date = sdf.format(dateTime)
+
+        val dbHandler = SqliteOpenHelper(this, null)
+        dbHandler.addDate(date)
+        Log.i("DATE", "Date Added")
     }
 }
